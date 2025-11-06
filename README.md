@@ -71,3 +71,42 @@ Successfully enrolled the Linux host into Kibana Fleet
 
 <img width="1861" height="215" alt="image" src="https://github.com/user-attachments/assets/04769dfd-2502-4805-af12-a3c6d80ef106" />
 
+Creating an alert on Elastic to notify for suspicious SSH activity on the Linux host
+
+<img width="720" height="723" alt="image" src="https://github.com/user-attachments/assets/cc1522e7-4db2-42ba-88e3-5e428a0f8f4d" />
+
+The alert will generate when there are more than 5 unsuccessful SSH attempts within any 2 minute period
+
+Created a dashboard with a map visual highlighting the SSH attempts on the linux server by country, Vietnam had the most unsuccessful attempts with over 400 in less than 12 hours
+
+<img width="1895" height="703" alt="image" src="https://github.com/user-attachments/assets/823913b4-e0ea-4b17-927a-fe5b193e2dae" />
+
+With this dashboard, I will be easily alerted on any new suspicious SSH activity and can view the origin of the activity
+
+Creating an alert on Elastic to notify for failed RDP activity on the Windows server
+
+<img width="1389" height="636" alt="image" src="https://github.com/user-attachments/assets/3d9ce17a-82b0-46ea-a555-e409898e1343" />
+
+The alert will trigger when there are more than 5 unsuccessful RDP attempts within any 2 minute period
+
+Created a Rule within Elastic for SSH Brute Force attempts
+
+<img width="1625" height="634" alt="image" src="https://github.com/user-attachments/assets/1cfab15d-3e52-4f67-9ce3-c0ddd0c40fe9" />
+
+Created a scon Rule within Elastic for RDP Brute Force attempts with the same fields and threshold
+
+<img width="1587" height="119" alt="image" src="https://github.com/user-attachments/assets/99b09b71-fe2f-4620-ab0c-1d4d371c306f" />
+
+Updating and adding new Visualization to the Elastic Dashboard to include RDP Attempts
+
+<img width="1853" height="973" alt="image" src="https://github.com/user-attachments/assets/8935ee68-5dc9-4be2-a403-e162dbc1581c" />
+
+Updating the Dashboard to include Table views of Authentication attempts alongside the map view
+
+<img width="1891" height="861" alt="image" src="https://github.com/user-attachments/assets/c91aee4c-d5ba-45a3-83a3-c39b03349833" />
+
+This is the Authentication attempts for RDP in the same dashboard
+
+<img width="1887" height="866" alt="image" src="https://github.com/user-attachments/assets/69a86dc5-31de-42c6-8dae-c4dfe8cb027e" />
+
+
