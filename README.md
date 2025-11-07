@@ -240,3 +240,36 @@ Phase 6: "Exfiltration" of data on the compromised system
 
 <img width="1594" height="693" alt="image" src="https://github.com/user-attachments/assets/81375663-82d2-472e-9845-70a42572def0" />
 
+Interesting information: MITRE ID T1036 Masquerading
+
+<img width="1586" height="647" alt="image" src="https://github.com/user-attachments/assets/4b32b985-00d0-41ba-84d1-4914caf1e958" />
+
+That's exactly right
+
+<img width="919" height="395" alt="image" src="https://github.com/user-attachments/assets/984ec2dc-cd06-4f2c-aa93-d2d90bc71ada" />
+
+Even though the file name was downloaded as "svchost-Rengoku.exe" The Original file name is "Apollo.exe"
+
+<img width="593" height="493" alt="image" src="https://github.com/user-attachments/assets/1b6cbcb5-a32a-4947-b4fc-a4d9245e3455" />
+
+Now to create a Rule in Elastic to detect potential Mythic C2 Apollo agents
+
+<img width="1522" height="740" alt="image" src="https://github.com/user-attachments/assets/63a12afe-ce9b-4831-8068-569d40ab2d6f" />
+
+Building out the query to use for the Elastic dashboard
+
+<img width="1864" height="831" alt="image" src="https://github.com/user-attachments/assets/2d2b20e1-c64c-49df-98e6-8d6da7be78c7" />
+
+This is a key aspect: if it were true this means the server has a process that initiates the connection, however, this is false meaning that the connection was initiated from a different server than the host.
+
+<img width="718" height="406" alt="image" src="https://github.com/user-attachments/assets/7a7e06c7-d908-4ed2-995a-a3c64916d504" />
+
+New dashboard created to scan for potential C2 activity
+
+<img width="1874" height="795" alt="image" src="https://github.com/user-attachments/assets/33f3f422-306d-406b-8cc6-0f519da0dd54" />
+<img width="1883" height="225" alt="image" src="https://github.com/user-attachments/assets/962b0020-2a1f-4184-b7a5-2148f7030592" />
+
+
+
+
+
