@@ -47,7 +47,8 @@ Successfully enrolling my Windows Server into the Elastic Fleet
 
 <img width="1219" height="168" alt="image" src="https://github.com/user-attachments/assets/f4899d34-3fc4-4e15-a640-1de0b77b9dde" />
 
-Downloading Sysmon and Olafhartong's Sysmon Configuration into my Windows Server
+Downloading Sysmon and installing Sysmon. Sysmon must be configured with a specific configuration file to work correctly.
+For this I will be using Olafhartong's Sysmon Configuration for my Windows Server.
 
 <img width="818" height="379" alt="image" src="https://github.com/user-attachments/assets/eb3810c1-3fac-4e8f-8935-4a6a19b8348c" />
 
@@ -63,7 +64,7 @@ Elastic is properly ingesting Sysmon logs
 
 <img width="1543" height="636" alt="image" src="https://github.com/user-attachments/assets/c1821ead-59da-4b94-8d01-e139dfb517b3" />
 
-Created a Linux host for SSH usage
+Created a Linux host for SSH usage. I will be using this to create custom queries, alerts, and dashboards on Elastic.
 
 <img width="482" height="114" alt="image" src="https://github.com/user-attachments/assets/2d557d06-ae34-4dd4-9bf0-5780022e5c1b" />
 
@@ -75,9 +76,9 @@ Creating an alert on Elastic to notify for suspicious SSH activity on the Linux 
 
 <img width="720" height="723" alt="image" src="https://github.com/user-attachments/assets/cc1522e7-4db2-42ba-88e3-5e428a0f8f4d" />
 
-The alert will generate when there are more than 5 unsuccessful SSH attempts within any 2 minute period
+The alert will generate when there are more than 5 unsuccessful SSH attempts within any 2 minute period (I updated this to check every minute afterwards)
 
-Created a dashboard with a map visual highlighting the SSH attempts on the linux server by country, Vietnam had the most unsuccessful attempts with over 400 in less than 12 hours
+Created a dashboard with a map visual highlighting the SSH attempts on the linux server by country, Vietnam had the most unsuccessful attempts with over 400 in less than 12 hours (This ended up being over 30,000 in under 3 days)
 
 <img width="1895" height="703" alt="image" src="https://github.com/user-attachments/assets/823913b4-e0ea-4b17-927a-fe5b193e2dae" />
 
@@ -216,7 +217,7 @@ On the Mythic C2 server
 
 <img width="952" height="525" alt="image" src="https://github.com/user-attachments/assets/7722caa7-710f-4a30-9b2c-5a2e31b3ec77" />
 
-Moving and Renaming the executable file, it is now "svchost-Rengoku.exe"
+Moving and Renaming the executable file, it is now "svchost-Rengoku.exe" (Later on I ended up having to redownload the payload because Microsoft Security came back to life, and then Elastic EDR took over after that)
 
 <img width="813" height="178" alt="image" src="https://github.com/user-attachments/assets/499f5877-fbfd-4823-9581-2f6f73467e2b" />
 
