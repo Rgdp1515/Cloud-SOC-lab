@@ -269,7 +269,248 @@ New dashboard created to scan for potential C2 activity
 <img width="1874" height="795" alt="image" src="https://github.com/user-attachments/assets/33f3f422-306d-406b-8cc6-0f519da0dd54" />
 <img width="1883" height="225" alt="image" src="https://github.com/user-attachments/assets/962b0020-2a1f-4184-b7a5-2148f7030592" />
 
+Created a new Windows server for osTicket, we are now at 6 total servers on VULTR (Kali Linux was run from VirtualBox)
+
+<img width="1416" height="519" alt="image" src="https://github.com/user-attachments/assets/4bdb8321-cc3d-4d1c-bcba-3a36364032ea" />
+
+Downloading Xampp version 8.2.12 for the web host
+
+<img width="516" height="267" alt="image" src="https://github.com/user-attachments/assets/c3f2750f-92c5-458f-b2b5-c01ec8bd68f1" />
+
+Configuring the Xampp properties file
+
+<img width="808" height="690" alt="image" src="https://github.com/user-attachments/assets/551a4e06-9ca1-47a7-b52d-d5069fdd8a84" />
+
+Now configuring the config.inc.php file. Will first make a copy and then edit the original.
+
+<img width="987" height="705" alt="image" src="https://github.com/user-attachments/assets/4f15b1fa-0359-4b3d-8332-6a19a83ff028" />
+
+Moving into Windows Defender to configure the Firewall
+
+<img width="1219" height="327" alt="image" src="https://github.com/user-attachments/assets/5ec8b9a8-cee6-400a-a834-c124190a04f6" />
+
+The Firewall Rule description
+
+<img width="882" height="549" alt="image" src="https://github.com/user-attachments/assets/406f7aea-ad78-4a8e-a811-a624bce1deeb" />
+
+Configuring the 'Root' account for phpMyAdmin to bind to the IP of my osTicket server
+
+<img width="853" height="780" alt="image" src="https://github.com/user-attachments/assets/e9a935a6-f71c-4bad-980f-7cfb111cb639" />
+
+Configuring the 'Pma' account to bind to the IP as well
+
+<img width="1311" height="806" alt="image" src="https://github.com/user-attachments/assets/4ee0c0ad-6b3d-42b9-9eb7-6d9abeda8bb0" />
+
+Downloading osTicket v1.18.2
+
+<img width="1405" height="769" alt="image" src="https://github.com/user-attachments/assets/c22f447c-fc48-4a95-99fd-532d575d17d4" />
+
+Creating a 'New Folder' for osTicket in this directory because the default web contents are stored here
+
+<img width="915" height="680" alt="image" src="https://github.com/user-attachments/assets/7abd369a-009c-4596-b3ac-302af1848239" />
+
+And now we have access to the web host for osticket installer
+
+<img width="1418" height="506" alt="image" src="https://github.com/user-attachments/assets/3aa413a2-a589-4c71-a5b4-1a547bcba1d6" />
+
+Creating a new database 'Rengoku-DB' from phpMyAdmin
+
+<img width="1351" height="694" alt="image" src="https://github.com/user-attachments/assets/b4ac47df-46a2-46d8-94cf-db91c1c68e4c" />
+
+Then, configuring the settings of the 'Rengoku-DB' database from the osticket server
+
+<img width="1061" height="822" alt="image" src="https://github.com/user-attachments/assets/cf64cebb-3eff-46a8-a91e-fff5349f8926" />
+
+We now have osticket properly installed!
+
+<img width="1354" height="898" alt="image" src="https://github.com/user-attachments/assets/5ce6a945-bc89-4ebe-b3e0-b19bd934c00c" />
+
+The first step of the file configurations, using PowerShell
+
+<img width="1041" height="330" alt="image" src="https://github.com/user-attachments/assets/6758fc70-0ed5-4183-8eac-630b1e1ca40a" />
+
+Accessing the Staff Control Panel of osTicket from my host
+
+<img width="1275" height="588" alt="image" src="https://github.com/user-attachments/assets/a8c3203d-6c0c-4cde-b357-d92dfa304ab9" />
+
+Generating an API key to integrate osTicket with Elastic
+
+<img width="1221" height="288" alt="image" src="https://github.com/user-attachments/assets/b8e6af0b-7a05-4dfe-be74-fdfb1b58d19a" />
+
+Starting a Free Trial is necessary to integrate web API's
+
+<img width="1418" height="753" alt="image" src="https://github.com/user-attachments/assets/f91d3f40-60d9-4b50-b373-5700aa5179c2" />
+
+Using a 'Webhook' connector
+
+<img width="891" height="769" alt="image" src="https://github.com/user-attachments/assets/108b96c2-e99d-48bf-91bd-042ea5d4086b" />
+
+Stealing this Example
+
+<img width="1205" height="898" alt="image" src="https://github.com/user-attachments/assets/f0354a72-178f-46ed-b3dd-977ee565445f" />
+
+Great Success!
+
+<img width="867" height="758" alt="image" src="https://github.com/user-attachments/assets/1348d76f-2908-4d59-a4df-564f9da4ee45" />
+
+The POC from osTicket
+
+<img width="1205" height="456" alt="image" src="https://github.com/user-attachments/assets/a846df8d-0570-4481-a6e8-7f1690c9abc6" />
+
+Investigating an alert on Brute Force activity
+
+<img width="1863" height="888" alt="image" src="https://github.com/user-attachments/assets/c1077387-b3ad-4549-ac7a-58da05f4b913" />
+
+Checking the IP on AbuseIPDB: Originates from Thailand
+
+<img width="1793" height="659" alt="image" src="https://github.com/user-attachments/assets/3c65f5cf-9018-4409-af96-e57d921e1cb4" />
+
+From GreyNoise:
+
+<img width="452" height="151" alt="image" src="https://github.com/user-attachments/assets/756ccdfc-000b-4644-b673-c890e87ed4b0" />
+ This shows that the IP scans the internet for vulnerable servers, not indicative of a targeted attack (yet)
+
+ Further investigation into the IP, to check for successful attempts
+ 
+<img width="971" height="657" alt="image" src="https://github.com/user-attachments/assets/48a4e247-e4d5-4207-b4d2-39a1a9fbea84" />
+
+<img width="834" height="411" alt="image" src="https://github.com/user-attachments/assets/972e564f-7e9a-44a6-869d-ae644c6cca10" />
+ Can close out the ticket as benign
+
+ Configuring Elastic to send a ticket to our osTicket server when the 'Brute Force' alert is triggered
+
+ <img width="1421" height="836" alt="image" src="https://github.com/user-attachments/assets/1f76a750-df4d-4775-b7ff-f6b31d858731" />
+
+Adding a link to click from the ticket to go into elastic to being investigating the alert
+
+<img width="983" height="412" alt="image" src="https://github.com/user-attachments/assets/9e9d433a-b2ce-42f8-896d-2c00bb873088" />
+
+configuring the kibana.yml file for my ELK server so the hyperlink will work
+
+<img width="864" height="643" alt="image" src="https://github.com/user-attachments/assets/8ab30342-8ce1-460b-8812-81ef56cf4841" />
+
+Configuring RDP Alert to send tickets to osTicket
+
+<img width="1607" height="670" alt="image" src="https://github.com/user-attachments/assets/11563fa4-d5cc-4ab6-be64-ce42a46903aa" />
+
+Beginning RDP Brute Force investigation within the Alert Dashboard
+
+<img width="721" height="711" alt="image" src="https://github.com/user-attachments/assets/a0ae4fd3-2597-4545-98bd-1b3eb15d582e" />
+
+Checking the IP on AbuseIPDB
+
+<img width="848" height="199" alt="image" src="https://github.com/user-attachments/assets/c5ab900a-d662-41fe-821b-ca8338e84947" />
+
+Then on GreyNoise
+
+<img width="1118" height="417" alt="image" src="https://github.com/user-attachments/assets/225df863-5fe5-4bfc-9059-8f4ba6c6b1da" />
+ UH OH
+
+<img width="1328" height="542" alt="image" src="https://github.com/user-attachments/assets/b85a7e07-83df-4c65-b18d-544fa5edfd28" />
+
+The IP was able to RDP into the Administrator Account Successfully
+
+<img width="1566" height="530" alt="image" src="https://github.com/user-attachments/assets/ee9ed11c-cbea-4933-bea6-1cdc23e4fa33" />
+
+Capturing the 'TargetLogonID' and searching for further activity on the host system with that ID
+
+<img width="1835" height="842" alt="image" src="https://github.com/user-attachments/assets/d16f0343-6871-4121-b5b7-9670b37adf01" />
+
+There are 3 Events that occurred, the timing and sequence of events signals a scan of the host. Time to pivot
+
+<img width="1696" height="692" alt="image" src="https://github.com/user-attachments/assets/7a08f378-b9e4-405e-944f-b2d689eb0103" />
+
+Using the Dashboard, we see that there is potential suspicious activity
+
+<img width="1868" height="424" alt="image" src="https://github.com/user-attachments/assets/bf7314fe-7aa1-4976-a016-6fe9479aea12" />
+
+Searching for Network Connections with that Destination IP address
 
 
+<img width="1624" height="391" alt="image" src="https://github.com/user-attachments/assets/54b1ddca-4a8c-48bd-b191-7dc7fbe5b2f8" />
 
+Using ProcessGUID to search for events that occurred in that specific PowerShell session
 
+<img width="672" height="473" alt="image" src="https://github.com/user-attachments/assets/f6c1c124-641b-4212-8739-64a3b24cba0e" />
+
+We see a "File Created" with Event.code:11 
+
+<img width="1824" height="919" alt="image" src="https://github.com/user-attachments/assets/6ca7c22e-0a76-427b-9dd3-bd3c43a2f736" />
+
+The file name:
+
+<img width="634" height="595" alt="image" src="https://github.com/user-attachments/assets/45bb6723-ea86-479f-a21b-e0180ddcbb9d" />
+
+Event.Code:29 Is the Sysmon ID for creation of new executable files
+
+<img width="634" height="387" alt="image" src="https://github.com/user-attachments/assets/5ae12e8f-35df-4394-aebc-7996a6b11e11" />
+
+We find the 'Process:Create' which is Event.ID: 1. This shows a different ProcessGUID which is unique to the executable (Rengoku)
+
+<img width="1317" height="467" alt="image" src="https://github.com/user-attachments/assets/ceedbc49-9e0d-49f7-a1d5-ed867bccc138" />
+
+The notes of the investigation
+
+<img width="889" height="467" alt="image" src="https://github.com/user-attachments/assets/48b139e6-22c5-47b2-a0f1-ab0a20792acd" />
+
+Configuring the Mythic C2 Alert from Elastic to send tickets to osTicket
+
+<img width="766" height="236" alt="image" src="https://github.com/user-attachments/assets/17bb9e63-f50e-454b-8779-2fe73b3bae81" />
+
+Integrating Elastic Defend EDR into Elastic
+
+<img width="1884" height="334" alt="image" src="https://github.com/user-attachments/assets/ef75f80d-2471-4b83-838f-4387935f2f5a" />
+
+The configurations for Elastic Defend
+
+<img width="1216" height="735" alt="image" src="https://github.com/user-attachments/assets/43f1756b-20d8-45e5-9fbc-0703d651f3df" />
+
+<img width="1604" height="516" alt="image" src="https://github.com/user-attachments/assets/7ff69312-a1de-41f5-b54d-9b29bddf73c0" />
+
+Lovely email that my actions were being noticed out in the wild
+
+<img width="1371" height="973" alt="image" src="https://github.com/user-attachments/assets/da418ad3-2ebb-47e0-b847-e3f60d207b08" />
+
+Microsoft Defender was able to delete the file, redownloaded it.
+
+<img width="1873" height="200" alt="image" src="https://github.com/user-attachments/assets/bf04606d-4ec8-4256-acbf-10ae553c58e9" />
+
+Elastic EDR actively blocking the malware download even with Microsoft security settings turned off
+
+<img width="714" height="700" alt="image" src="https://github.com/user-attachments/assets/713cc05a-b7b2-44fa-b2f0-00a254ef9c67" />
+
+Maybe we can brute force the malware onto the system?
+
+<img width="1375" height="485" alt="image" src="https://github.com/user-attachments/assets/d32b0eac-59ae-4933-955f-0c12c354ef8a" />
+
+The file was allowed to be downloaded, but the connection to Mythic was cut after 1 second...
+
+<img width="744" height="791" alt="image" src="https://github.com/user-attachments/assets/22ba4686-c257-441f-bf85-d05eaf76e6e1" />
+
+Very suspicious activity
+
+<img width="900" height="468" alt="image" src="https://github.com/user-attachments/assets/2558b88d-6dfc-4c68-a71b-ef9f95edf812" />
+<img width="890" height="518" alt="image" src="https://github.com/user-attachments/assets/c8ee32eb-7d45-4fc5-9ed8-b61728ffea7b" />
+
+From here the steps to take: 
+1. Isolate the host. Prevent any further spread of malicious activity
+2. Perform OSINT. We can upload the file to VirusTotal to investigate it further  
+ <img width="1024" height="420" alt="image" src="https://github.com/user-attachments/assets/856fb329-7904-48ce-adad-8f57a83e6190" />
+3. Check for autoruns/scheduled tasks 
+ <img width="1060" height="757" alt="image" src="https://github.com/user-attachments/assets/c95ef06d-7903-442c-90fe-21265010a1ab" />
+4. Check if it is still running
+<img width="918" height="222" alt="image" src="https://github.com/user-attachments/assets/8a82f4f8-664c-40b8-af55-6c04acfc6a99" />
+5. Perform full antivirus scan
+ <img width="1065" height="862" alt="image" src="https://github.com/user-attachments/assets/2ea30441-dfa7-4262-969d-5b8912fd5ad3" />
+6. Remove the threat
+7. Save the Filehash for threat intelligence
+8. Lessons learned
+   - Don't turn off security settings
+   - Don't click links to things that are suspicious
+   - Elastic EDR is more powerful than my Mythic C2 server
+
+Configuring Elastic EDR to automatically Isolate the Windows server when detecting malware
+
+<img width="1836" height="874" alt="image" src="https://github.com/user-attachments/assets/dbc35dba-f992-4410-9ff5-97a59073c7e0" />
+
+   
