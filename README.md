@@ -504,7 +504,9 @@ From here the steps to take:
 5. Perform full antivirus scan
  <img width="1065" height="862" alt="image" src="https://github.com/user-attachments/assets/2ea30441-dfa7-4262-969d-5b8912fd5ad3" />
 6. Remove the threat
+
 7. Save the Filehash for threat intelligence
+
 8. Lessons learned
    - Don't turn off security settings
    - Don't click links to things that are suspicious
