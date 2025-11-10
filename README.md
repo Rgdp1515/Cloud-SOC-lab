@@ -1,843 +1,222 @@
-# 🧠 Cloud SOC Lab  
-Building a cloud-based Security Operations Center (SOC) environment in **Vultr** to simulate attacks and investigate telemetry using **Elastic Stack**, **osTicket**, and **Elastic Defend**.
+# Cloud-SOC-Lab
+
+Creating a SOC environment in VULTR to generate telemetry, investigate incidents, and analyze network traffic/malware.
 
 ---
 
-## 🏗️ Architecture Overview  
+## Architecture Diagram
 
-This lab simulates a modern cloud SOC ecosystem. It integrates Elastic for log collection and detection, osTicket for case management, and Kali Linux/Mythic C2 for red-team adversary simulation.  
-
-**Environment Components:**  
-- 🧩 **Elastic Stack (ELK)** – SIEM and visualization layer  
-- 🖥️ **Windows Server** – Target host for RDP attacks and Sysmon telemetry  
-- 🐧 **Ubuntu Fleet Server** – Elastic Agent manager and log shipper  
-- 💀 **Kali Linux** – Red Team simulation platform (Crowbar, Hydra)  
-- 🕵️ **Mythic C2** – Command & Control framework for adversary emulation  
-- 🎟️ **osTicket** – Case management and alert triage  
-- 🛡️ **Elastic Defend** – Endpoint protection and automated host isolation  
-
-*(Insert your architecture diagram below)*
-
-<img width="100%" alt="Cloud SOC Architecture" src="YOUR-DIAGRAM-LINK-HERE" />
+![Architecture Diagram](assets/screenshots/SOC-Chart.png)
 
 ---
 
-## ⚙️ Phase 1: Initial Setup  
-
-### Deploying Elastic Stack on Ubuntu  
-
-Installed and configured **Elasticsearch** and **Kibana** on an Ubuntu VM hosted in Vultr.
-
-<img width="1392" height="724" alt="Ubuntu Server on VULTR" src="https://github.com/user-attachments/assets/f20f1347-c7ef-4bb3-a761-b0f79135f27a" />
-
-### Installing and Starting Elasticsearch  
-
-<img width="1060" height="222" alt="Downloading Elasticsearch onto the Ubuntu server" src="https://github.com/user-attachments/assets/d78195c0-25fb-46dd-ac57-4ba9373b78b8" />
-
-<img width="1084" height="433" alt="Starting Elasticsearch on the Ubuntu server" src="https://github.com/user-attachments/assets/a0b4b72d-39ef-4462-8e3f-d9b32cae9640" />
-
-### Setting Up Kibana  
-
-Downloaded and initialized **Kibana**, the visualization and management layer of Elastic.
-
-<img width="1089" height="590" alt="Downloading and initializing Kibana on the Ubuntu server" src="https://github.com/user-attachments/assets/41735b82-22d8-4503-9179-e6491091a192" />
-
-Successfully authenticated and enrolled into Kibana.
-
-<img width="1868" height="630" alt="Successfully enrolling and authenticated into Kibana" src="https://github.com/user-attachments/assets/2b0f1d4e-e94b-41f3-a115-e601fad77e85" />
-
-Generated and stored security keys for Kibana.
-
-<img width="949" height="130" alt="Generating and storing security keys into the Kibana Key storage" src="https://github.com/user-attachments/assets/3aa90d88-82a9-4f96-93d3-2f6e7f0487b6" />
-
----
-
-### Configuring Fleet Server and Elastic Agent  
-
-Set up **Elastic Fleet Server** to centrally manage and enroll agents across all hosts.
+## 1. Initial Setup
 
 <details>
-  <summary>🖼️ View Setup Screenshots</summary>
+<summary>Ubuntu Server & ELK Stack Setup</summary>
 
-  <br>
+1. **Servers on VULTR**  
+   ![VULTR Servers](assets/screenshots/VULTRServers.png)
 
-  <img width="1021" height="452" alt="Fleet Server Installation Command" src="https://github.com/user-attachments/assets/7f5a2ef7-02a4-457d-86a2-18a0dcb1a61b" />
+2. **Downloading Elasticsearch**  
+   ![Downloading Elasticsearch](assets/screenshots/DLElasticsearchUbuntuserver.png)
 
-  <br>
+3. **Starting Elasticsearch**  
+   ![Starting Elasticsearch](assets/screenshots/StartingElasticsearchUbuntuserver.png)
 
-  <img width="1784" height="625" alt="Fleet Server Running and Listening on Port 8220" src="https://github.com/user-attachments/assets/0d703132-20e9-4af5-8cf2-1c4c963aebc3" />
+4. **Downloading & Initializing Kibana**  
+   ![Kibana Setup](assets/screenshots/DLKibanaUbuntuserver.png)
 
-  <br>
+5. **Kibana Authentication & Key Storage**    
+   ![Storing Security Keys](assets/screenshots/Keygeneratestorage.png)
 
-  <img width="1784" height="647" alt="Elastic Agent Enrolled and Connected to Fleet" src="https://github.com/user-attachments/assets/a32a1f46-1865-4b23-b37b-27e91bda7a7d" />
+6. **Fleet Server Enrollment**  
+   ![Centralized Fleet Server](assets/screenshots/ElasticFleet.png)  
+  
 
-  <br>
+</details>
+
+<details>
+<summary>Windows Server Setup</summary>
+
+1. **Windows 10 Server with RDP Open**  
+   ![Windows Server RDP](assets/screenshots/Windowsserversetup.png)
+
+2. **Sysmon Installation & Configuration**  
+   ![Sysmon Download](assets/screenshots/DLandConfigureSysmon.png)
+
+3. **Ingesting Windows Event Logs in Elastic**  
+   ![Elastic Windows Event Logs](assets/screenshots/ConfigureElasticWindowsEventlogsingestion.png)  
+   ![Elastic Defender Logs](assets/screenshots/ConfigureElasticWindowsDefenderlogs.png)
+
+4. **Elastic is properly ingesting Sysmon logs**  
+   ![Sysmon Logs](assets/screenshots/ElasticPOVSysmonLogIngestion.png)
 
 </details>
 
 ---
 
-### Enrolling Windows Server to Elastic  
-
-Enrolled a **Windows Server 2022** host with **Elastic Agent** to capture RDP, Sysmon, and Defender telemetry.
+## 2. Blue Team – Detection & Monitoring
 
 <details>
-  <summary>🖼️ View Enrollment Screenshots</summary>
+<summary>Alerts & Dashboards</summary>
 
-  <img width="1512" height="697" alt="Windows Server Elastic Agent Install" src="https://github.com/user-attachments/assets/7c89a2e9-ff45-4f51-961c-67a6c3e91de1" />
+1. **Linux Host Enrollment for SSH Monitoring**  
+   ![Linux Host](assets/screenshots/LinuxHostCLI.png)  
+   ![Linux Host Fleet Enrollment](assets/screenshots/SuccessEnrollLinuxElasticFleet.png)
 
-  <img width="1512" height="707" alt="Windows Server Enrolled in Elastic" src="https://github.com/user-attachments/assets/69f5c19b-62b7-4221-bd58-d33e6947870d" />
+2. **SSH Brute Force Alert**  
+   ![SSH Alert Setup](assets/screenshots/AlertCreateSSHonLinux.png)  
+   ![SSH Dashboard Map](assets/screenshots/DashboardCreateSSHActivity.png)
+
+3. **RDP Brute Force Alert**  
+   ![RDP Alert Setup](assets/screenshots/AlertCreateRDPonWindows.png)  
+   ![RDP Dashboard Table](assets/screenshots/DashboardUpdateRDPAttempt.png)
+
+4. **Elastic Correlation Rules**  
+   ![SSH Rule](assets/screenshots/RuleCreateSSHLinuxActivity.png)  
+   ![RDP Rule](assets/screenshots/RuleCreateRDPWindowsActivity.png)
+
+</details>
+
+<details>
+<summary>MITRE Mapping & Elastic Correlation</summary>
+
+1. **MITRE ATT&CK Tactics & Techniques**  
+   - Initial Access: Brute Force (T1110)  
+   - Execution: Command and Control (T1071)  
+   - Defense Evasion: Masquerading (T1036)  
+   - Exfiltration: Data from Local System (T1005)
+
+2. **Elastic Detection**  
+   ![Elastic MITRE Dashboard](assets/screenshots/PEC2Dashboard.png)
+   ![Elastic MITRE Dashboard](assets/screenshots/PEC2Dashboard1.png) 
+   ![Elastic Query Setup](assets/screenshots/PEC2DetectQueryStructure.png)
+   ![Elastic Query Setup](assets/screenshots/PEC2DetectQuery.png)
+   ![Elastic Query Setup](assets/screenshots/PECreateC2Detect.png)
 </details>
 
 ---
 
-### Enabling Sysmon Logging  
-
-Configured **Sysmon** on Windows to collect detailed process creation, network connection, and registry telemetry for Elastic analysis.
+## 3. Red Team – Adversary Simulation
 
 <details>
-  <summary>🖼️ View Sysmon Configuration Screenshots</summary>
+<summary>Mythic C2 Server Setup</summary>
 
-  <img width="1536" height="710" alt="Installing Sysmon on Windows Server" src="https://github.com/user-attachments/assets/d3e3d5b7-6a6a-4b8b-a041-0b5b67a23b89" />
+1. **Ubuntu Mythic Server Installation**
+   ![Mythic Install](assets/screenshots/MythicCLIHistoryforSetup.png)
+   ![Mythic Install](assets/screenshots/MythicCLIHistoryforSetupInstall.png)
+   ![Mythic Install](assets/screenshots/MythicCLIHistoryforSetupInstall2.png) 
+   ![Mythic CLI Setup](Phase4-2MythicCLIhttpagent.png)
+   ![Mythic CLI Setup](assets/screenshots/MythicCLILogin.png)
+   ![Mythic Web Setup](assets/screenshots/MythicLogin.png)
+   ![Mythic Web Setup](Phase4-1MythicPOV.png)
+3. **Payload Generation & Execution**  
+   ![Payload Config](Phase4-3-1PayloadCreate.png)  
+   ![Payload CLI download](Phase4-4PayloadCLI.png)
 
-  <img width="1536" height="700" alt="Sysmon Running and Logging Events" src="https://github.com/user-attachments/assets/e0c2143b-9617-4f4d-9f2a-4b1f24c6ed4a" />
+</details>
+
+<details>
+<summary>Attack Phases & Detection</summary>
+
+1. **Phase 1: Initial Access**  
+   ![Brute Force](assets/screenshots/Phase1KaliConfig.png)  
+   ![Brute Force RDP](assets/screenshots/Phase1KaliConfig5.png)
+   ![Brute Force RDP](assets/screenshots/Phase1KaliConfig5-1.png)
+
+2. **Phase 2: Discovery**  
+   ![Discovery](Phase2.png)
+
+3. **Phase 3: Defense Evasion**  
+   ![Defense Evasion](Phase3.png)
+
+4. **Phase 4: Execution**  
+   ![Execution](Phase4-4PayloadCLI.png)
+   ![Execution](Phase4-4-1PayloadCLIRename.png)
+   ![Execution](Phase4-5HTTPSERVERHost.png)
+   ![Execution](Phase4-6Executiong.png)
+
+5. **Phase 5: Command & Control**  
+   ![Command Control](assets/screenshots/Phase5Connect.png)
+   ![Command Control](assets/screenshots/Phase5-1Connect.png)
+
+6. **Phase 6: Exfiltration**  
+   ![Exfiltration](assets/screenshots/Phase6Exfiltrate.png)  
+
 </details>
 
 ---
 
-### Log Ingestion and Validation  
-
-Validated that Elastic successfully received logs from both **Windows** and **Ubuntu** hosts. Verified fields, event IDs, and dashboards for host activity.
+## 4. osTicket Integration & Triage Process
 
 <details>
-  <summary>🖼️ View Log Ingestion Screenshots</summary>
+<summary>Integration Setup</summary>
 
-  <img width="1784" height="658" alt="Elastic Host Overview Dashboard" src="https://github.com/user-attachments/assets/48f5c908-0d17-498f-933d-f2927b7a65ed" />
+1. **XAMPP & PHPMyAdmin Configuration**  
+   ![XAMPP Install](assets/screenshots/DLXampp.png)
+   ![XAMPP Install](assets/screenshots/ConfigureXamppPropertiesFile.png)
+   ![XAMPP Install](assets/screenshots/ConfigureXamppPHPFile.png) 
+   ![DB Setup](assets/screenshots/ConfigurePHPMyAdminRengokuDB.png)
+   ![DB Setup](assets/screenshots/ConfigurePHPMyAdminRengokuDB1.png)
 
-  <img width="1784" height="625" alt="Windows Event Logs Visible in Kibana" src="https://github.com/user-attachments/assets/6b13a998-8fcb-4b8c-8d9b-1c676671df52" />
+2. **osTicket Installation & Staff Control Panel**  
+   ![osTicket Install](assets/screenshots/DLosTicket.png)
+   ![osTicket Install](assets/screenshots/osTicketInstaller.png)
+   ![osTicket Install](assets/screenshots/osTicketInstalled.png)
+   ![osTicket Install](assets/screenshots/ConfigureosTicketPowerShell.png)
+   ![Staff Control Panel](assets/screenshots/osTicketStaffControlPanel.png)
+
+3. **API Integration with Elastic**  
+   ![API Key](osTicketAPIKeyGenerate.png)  
+   ![Webhook Setup](assets/screenshots/osTicketWebhookConnector.png)
+   ![YML File Configuration](assets/screenshots/ConfigureElasticCLIymlosTickethyperlink.png)
 </details>
-
----
-
-### Outcome  
-
-At this stage, the SOC environment was operational:  
-✅ Elastic Stack deployed and reachable  
-✅ Fleet Server managing enrolled agents  
-✅ Sysmon feeding event-level telemetry  
-✅ Data visible and searchable in Kibana dashboards  
-
-This foundation enabled the next phase: **alerting, detection engineering, and osTicket integration**.
-
----
-
-## 🛡️ Phase 2: Blue Team Operations  
-
-After building the foundation of the SOC, I focused on integrating **osTicket** with **Elastic Stack** to simulate a real-world Security Operations workflow — where detections trigger automated ticket creation and analysts triage incidents.
-
----
-
-### Setting Up osTicket for Incident Management  
-
-Deployed **osTicket** to manage and track security alerts from Elastic.  
-Configured departments, help topics, and ticket queues specifically for SOC use cases (e.g., Intrusion Detection, Malware, Authentication Anomalies).
 
 <details>
-  <summary>🖼️ View osTicket Configuration Screenshots</summary>
-
-  <img width="1784" height="663" alt="osTicket Interface Setup" src="https://github.com/user-attachments/assets/54ef54f9-0d5d-4861-a7e2-bb7a11ac4463" />
-
-  <img width="1784" height="635" alt="osTicket Departments and Teams Configuration" src="https://github.com/user-attachments/assets/2b573d7c-83fc-4b79-b64f-12f1d6a18c38" />
-
-  <img width="1784" height="660" alt="osTicket Categories for SOC Workflow" src="https://github.com/user-attachments/assets/32b0d84b-733b-472b-ae1a-4e4e7fdf06a7" />
-</details>
-
----
-
-### Integrating Elastic Alerts with osTicket  
-
-Configured **Elastic’s Rule Engine** to send webhook alerts directly into osTicket’s API.  
-This allowed Elastic detections (like brute-force attempts or suspicious logons) to automatically open a new investigation ticket for analysts.
-
-<details>
-  <summary>🖼️ View Integration Setup Screenshots</summary>
-
-  <img width="1784" height="662" alt="Elastic Webhook Action Setup" src="https://github.com/user-attachments/assets/1c54ed6b-7a1c-43d4-8a04-d6c3f404f88a" />
-
-  <img width="1784" height="660" alt="osTicket Receiving Alerts from Elastic" src="https://github.com/user-attachments/assets/9c20513d-0309-46e5-8254-2373b69c63e8" />
-</details>
-
----
-
-### Validating Automated Ticket Creation  
-
-Each triggered alert in Elastic generated a corresponding **ticket in osTicket** — containing metadata such as:
-- Source IP  
-- Target host  
-- Detection rule name  
-- Timestamp  
-- Severity  
-
-This replicated the escalation process SOC analysts follow when responding to security alerts.
-
-<details>
-  <summary>🖼️ View Ticket Automation in Action</summary>
-
-  <img width="1784" height="660" alt="osTicket Ticket Automatically Created from Elastic Alert" src="https://github.com/user-attachments/assets/1252b70d-b2c1-4de0-9272-217a61d9cba4" />
-
-  <img width="1784" height="625" alt="Analyst View of osTicket with Alert Metadata" src="https://github.com/user-attachments/assets/3c1e8a89-3f9e-4b31-bf0d-5b88b9da9e9f" />
-</details>
-
----
-
-### Simulating Incident Triage  
-
-Using osTicket, I simulated a **Level 1–2 SOC analyst workflow**:
-1. Review incoming tickets from Elastic alerts  
-2. Perform quick IOC enrichment (e.g., IP lookup, VirusTotal)  
-3. Assign priority and escalate if necessary  
-4. Close or document the investigation outcome  
-
-This process created a realistic incident lifecycle, linking Elastic detections with an operational response pipeline.
-
-<details>
-  <summary>🖼️ View Triage Workflow Screenshots</summary>
-
-  <img width="1784" height="655" alt="Elastic Alert Triggering SOC Investigation Ticket" src="https://github.com/user-attachments/assets/0b80ef03-f02e-4f03-b2cc-0c5db3f91891" />
-
-  <img width="1784" height="657" alt="Ticket Assignment and Escalation" src="https://github.com/user-attachments/assets/8f012c27-c6b4-4eac-88ed-4ec11cb7cc08" />
-</details>
-
----
-
-### Outcome  
-
-By integrating Elastic Stack with osTicket, I replicated a real SOC analyst’s workflow:
-✅ Elastic detections automatically triggered incident tickets  
-✅ Tickets contained complete alert context  
-✅ Analysts could triage, document, and close incidents end-to-end  
-
-This automation bridged detection and response, demonstrating how modern SOCs streamline workflows for faster, consistent investigations.
-
----
-
-## 💀 Phase 3: Red Team Simulation  
-
-With the SOC fully operational, I switched to an **adversarial mindset** — simulating common attack techniques using **Kali Linux** and **Mythic C2** to validate my detection engineering and blue team visibility.
-
----
-
-### Brute Force Attack Simulation (Kali Linux)  
-
-Used **Hydra** and **Crowbar** on Kali Linux to perform **RDP brute-force attacks** against the Windows Server to simulate external threat actor activity.
-
-<details>
-  <summary>🖼️ View Brute Force Simulation Screenshots</summary>
-
-  <img width="1784" height="635" alt="Hydra Brute Force Command" src="https://github.com/user-attachments/assets/185ed07c-5c61-4401-80f6-0f3bb2f5e4b3" />
-
-  <img width="1784" height="665" alt="Crowbar RDP Brute Force Attempt" src="https://github.com/user-attachments/assets/4e879c4c-2e7d-4d9f-8f5c-5a7f09e3df49" />
-</details>
-
----
-
-### Elastic Detection Correlation  
-
-Elastic automatically detected the brute-force activity, correlating it with authentication failures and network anomalies from Windows event logs and Sysmon telemetry.  
-
-**Detection Highlights:**  
-- Multiple failed RDP logons (Event ID 4625)  
-- Source IP correlation with known Kali host  
-- Spike in authentication attempts per minute  
-
-<details>
-  <summary>🖼️ View Elastic Detection Correlation Screenshots</summary>
-
-  <img width="1784" height="645" alt="Elastic Detection Alert for Brute Force" src="https://github.com/user-attachments/assets/bba7a3d1-2b47-4f10-a6f5-c2d08a4b7c1d" />
-
-  <img width="1784" height="657" alt="Elastic Brute Force Timeline and Event Correlation" src="https://github.com/user-attachments/assets/7a94c28b-7db9-4c4e-93a8-3f6c14a2c676" />
-</details>
-
----
-
-### Deploying Mythic C2  
-
-Installed and configured **Mythic Command & Control (C2)** on Ubuntu.  
-Deployed the **Apollo agent** on the Windows Server using a payload delivered via RDP.
-
-<details>
-  <summary>🖼️ View Mythic C2 Deployment Screenshots</summary>
-
-  <img width="1784" height="640" alt="Mythic C2 Server Dashboard" src="https://github.com/user-attachments/assets/19e917d0-5f87-45c3-a9f4-3d8830b9dfb5" />
-
-  <img width="1784" height="650" alt="Apollo Agent Callback in Mythic" src="https://github.com/user-attachments/assets/fbdf15b0-7d02-4a7e-8c5d-94f0de39b01f" />
-</details>
-
----
-
-### Elastic’s Response and MITRE ATT&CK Mapping  
-
-Elastic’s built-in detections quickly identified the **C2 beaconing** and **process masquerading** associated with the Mythic payload.  
-Mapped detections aligned to the **MITRE ATT&CK framework**, confirming the SOC’s ability to detect early-stage command-and-control activity.
-
-**Detected Techniques:**  
-| Technique ID | Name | Description |
-|---------------|------|-------------|
-| T1110 | Brute Force | Multiple failed RDP authentication attempts |
-| T1059 | Command and Scripting Interpreter | Use of PowerShell commands by C2 agent |
-| T1036 | Masquerading | Payload execution disguised as legitimate process |
-| T1071 | Application Layer Protocol | C2 communication via HTTP/S channels |
-
-<details>
-  <summary>🖼️ View Detection Mapping and Elastic Response</summary>
-
-  <img width="1784" height="655" alt="Elastic Detection MITRE Mapping" src="https://github.com/user-attachments/assets/7d45a38d-69ac-4b6a-bcfb-77e7d1b85b3d" />
-
-  <img width="1784" height="660" alt="Elastic Correlation of Mythic C2 Activity" src="https://github.com/user-attachments/assets/0d734eeb-b932-4b06-9e6d-3df3c08392cb" />
-</details>
-
----
-
-### Outcome  
-
-✅ Successfully emulated real-world adversary behavior within a controlled lab  
-✅ Verified SOC’s ability to detect brute-force, payload execution, and C2 beaconing  
-✅ Mapped detection events to MITRE ATT&CK techniques for structured threat analysis  
-✅ Demonstrated end-to-end Red vs. Blue visibility through Elastic  
-
-This phase validated the SOC’s defensive readiness and the visibility of Elastic detections across every stage of the attack lifecycle.
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Cloud-SOC-lab
-Creating a SOC environment in VULTR to generate telemetry, investigate incidents, and analyze network traffic/malware
-
- # Screenshots
-
- Ubuntu Server on VULTR
-
- <img width="1392" height="724" alt="image" src="https://github.com/user-attachments/assets/f20f1347-c7ef-4bb3-a761-b0f79135f27a" />
-
-Downloading Elasticsearch onto the Ubuntu server
-
-<img width="1060" height="222" alt="image" src="https://github.com/user-attachments/assets/d78195c0-25fb-46dd-ac57-4ba9373b78b8" />
-
-Starting Elasticsearch on the Ubuntu server
-
-<img width="1084" height="433" alt="image" src="https://github.com/user-attachments/assets/a0b4b72d-39ef-4462-8e3f-d9b32cae9640" />
-
-Downloading and initializing Kibana on the Ubuntu server
-
-<img width="1089" height="590" alt="image" src="https://github.com/user-attachments/assets/41735b82-22d8-4503-9179-e6491091a192" />
-
-Successfully enrolling and Authenticated into Kibana
-
-<img width="1868" height="630" alt="image" src="https://github.com/user-attachments/assets/2b0f1d4e-e94b-41f3-a115-e601fad77e85" />
-
-Generating and storing security keys into the Kibana Key storage
-
-<img width="949" height="130" alt="image" src="https://github.com/user-attachments/assets/3aa90d88-82a9-4f96-93d3-2f6e7f0487b6" />
-
-Windows 10 Server Installed with RDP open to the internet
-
-<img width="1217" height="823" alt="image" src="https://github.com/user-attachments/assets/0d73aa99-d218-484e-b2f3-d17fdb622272" />
-
-Adding an Ubuntu Fleet Server 
-
-<img width="600" height="116" alt="image" src="https://github.com/user-attachments/assets/b0039191-f0d3-49bc-8913-16b1ef114e1c" />
-
-Connecting the Fleet Server to Kibana
-
-<img width="902" height="534" alt="image" src="https://github.com/user-attachments/assets/25203a64-fa58-4753-864f-3f4b30461ce4" />
-
-Successfully enrolling my Fleet Server into the Elastic Fleet
-
-<img width="1106" height="127" alt="image" src="https://github.com/user-attachments/assets/bee49c6d-df8d-4756-b90b-3f81c5c4d5ff" />
-
-Successfully enrolling my Windows Server into the Elastic Fleet
-
-<img width="1219" height="168" alt="image" src="https://github.com/user-attachments/assets/f4899d34-3fc4-4e15-a640-1de0b77b9dde" />
-
-Downloading Sysmon and installing Sysmon. Sysmon must be configured with a specific configuration file to work correctly.
-For this I will be using Olafhartong's Sysmon Configuration for my Windows Server.
-
-<img width="818" height="379" alt="image" src="https://github.com/user-attachments/assets/eb3810c1-3fac-4e8f-8935-4a6a19b8348c" />
-
-Configuring Elastic to ingest Windows Event Logs
-
-<img width="1865" height="623" alt="image" src="https://github.com/user-attachments/assets/c0d12278-a4fd-46fb-8dcf-1e6f87c4dc62" />
-
-Configured Elastic to ingest Windows Defender logs and Windows Event logs
-
-<img width="1672" height="316" alt="image" src="https://github.com/user-attachments/assets/02bf223a-f9e7-4f0b-b26d-e5bcdab208e8" />
-
-Elastic is properly ingesting Sysmon logs
-
-<img width="1543" height="636" alt="image" src="https://github.com/user-attachments/assets/c1821ead-59da-4b94-8d01-e139dfb517b3" />
-
-Created a Linux host for SSH usage. I will be using this to create custom queries, alerts, and dashboards on Elastic.
-
-<img width="482" height="114" alt="image" src="https://github.com/user-attachments/assets/2d557d06-ae34-4dd4-9bf0-5780022e5c1b" />
-
-Successfully enrolled the Linux host into Kibana Fleet
-
-<img width="1861" height="215" alt="image" src="https://github.com/user-attachments/assets/04769dfd-2502-4805-af12-a3c6d80ef106" />
-
-Creating an alert on Elastic to notify for suspicious SSH activity on the Linux host
-
-<img width="720" height="723" alt="image" src="https://github.com/user-attachments/assets/cc1522e7-4db2-42ba-88e3-5e428a0f8f4d" />
-
-The alert will generate when there are more than 5 unsuccessful SSH attempts within any 2 minute period (I updated this to check every minute afterwards)
-
-Created a dashboard with a map visual highlighting the SSH attempts on the linux server by country, Vietnam had the most unsuccessful attempts with over 400 in less than 12 hours (This ended up being over 30,000 in under 3 days)
-
-<img width="1895" height="703" alt="image" src="https://github.com/user-attachments/assets/823913b4-e0ea-4b17-927a-fe5b193e2dae" />
-
-With this dashboard, I will be easily alerted on any new suspicious SSH activity and can view the origin of the activity
-
-Creating an alert on Elastic to notify for failed RDP activity on the Windows server
-
-<img width="1389" height="636" alt="image" src="https://github.com/user-attachments/assets/3d9ce17a-82b0-46ea-a555-e409898e1343" />
-
-The alert will trigger when there are more than 5 unsuccessful RDP attempts within any 2 minute period
-
-Created a Rule within Elastic for SSH Brute Force attempts
-
-<img width="1625" height="634" alt="image" src="https://github.com/user-attachments/assets/1cfab15d-3e52-4f67-9ce3-c0ddd0c40fe9" />
-
-Created a scon Rule within Elastic for RDP Brute Force attempts with the same fields and threshold
-
-<img width="1587" height="119" alt="image" src="https://github.com/user-attachments/assets/99b09b71-fe2f-4620-ab0c-1d4d371c306f" />
-
-Updating and adding new Visualization to the Elastic Dashboard to include RDP Attempts
-
-<img width="1853" height="973" alt="image" src="https://github.com/user-attachments/assets/8935ee68-5dc9-4be2-a403-e162dbc1581c" />
-
-Updating the Dashboard to include Table views of Authentication attempts alongside the map view
-
-<img width="1891" height="861" alt="image" src="https://github.com/user-attachments/assets/c91aee4c-d5ba-45a3-83a3-c39b03349833" />
-
-This is the Authentication attempts for RDP in the same dashboard
-
-<img width="1887" height="866" alt="image" src="https://github.com/user-attachments/assets/69a86dc5-31de-42c6-8dae-c4dfe8cb027e" />
-
-I have set up a new Ubuntu server as my C2 Server
-
-<img width="730" height="134" alt="image" src="https://github.com/user-attachments/assets/5f1ac196-a221-47be-9fda-c2b575e423a8" />
-
-And will be Using Kali Linux on VirtualBox to simulate real-life attack scenarios
-
-<img width="1021" height="801" alt="image" src="https://github.com/user-attachments/assets/74ddc43f-19c0-4b84-96c7-8283fe6b4340" />
-
-On the Ubuntu Mythic server:
-
-<img width="617" height="176" alt="image" src="https://github.com/user-attachments/assets/9330f04c-05ff-4d7a-83ca-fc5f3c852b4e" />
-
-The above commands: 
-1. Update the repositories and dependencies
-2. Installed docker-compose for later use
-3. Installed make for later use
-4. Cloned the Mythic repository from github
-
-I then installed Mythic onto my Ubuntu server using Docker
-
-<img width="512" height="22" alt="image" src="https://github.com/user-attachments/assets/3af09292-8a82-4d49-8899-b2746f658c5f" />
-
-Restarted docker to activate the application, "Make" command to create and run Mythic cli
-
-<img width="846" height="407" alt="image" src="https://github.com/user-attachments/assets/bfb9c4eb-005f-4bc7-9948-97f3dc249ad8" />
-
-Troubleshooting my VULTR firewall settings to figure out the connection error
-
-<img width="893" height="763" alt="image" src="https://github.com/user-attachments/assets/7576b93b-f43c-488f-a239-7d7076e207c0" />
-
-Fixed the issue... Mythic wasn't properly started...
-
-<img width="937" height="175" alt="image" src="https://github.com/user-attachments/assets/b9e95808-3a4a-47bb-bb5d-310545608ba8" />
-
-And we have this beauty
-
-<img width="1054" height="802" alt="image" src="https://github.com/user-attachments/assets/0f095d45-0225-4ba0-9904-587be33e4351" />
-
-To find our password for the Mythic admin account
-
-<img width="652" height="674" alt="image" src="https://github.com/user-attachments/assets/f907a27f-33c8-42ac-ae3e-011df5283d20" />
-
-We can now begin with Phase 1 of attacking the target host, "Initial Access"
-Using rockyou.txt wordlist to attempt our brute-force attack, unzipping the file
-
-<img width="595" height="467" alt="image" src="https://github.com/user-attachments/assets/dc36fff4-3114-4c39-95e1-d01bc365fb2c" />
-
-Installing Crowbar in Kali. Crowbar is a brute-force tool that supports OpenVPN, SSH, and RDP.
-
-<img width="488" height="70" alt="image" src="https://github.com/user-attachments/assets/60cf401b-b412-4411-85ee-7f7a3b91ee26" />
-
-The configuration for Crowbar to bruteforce the target host
-
-<img width="642" height="62" alt="image" src="https://github.com/user-attachments/assets/35b29c10-6dde-412d-b7de-47754e60af91" />
- The command initiates Crowbar. "-b" signals to use RDP. "-u" is the username "Administrator." "-C" is the wordlist to test the authentication with (for automation). "-S" is the target IP (My Windows Server)
-
- Crowbar didnt recognize the path that xfreerdp was using (because it was xfreerdp3) so i pointed it to the original file and crowbar should work now
-
-<img width="621" height="760" alt="image" src="https://github.com/user-attachments/assets/8d0126c1-b0e7-4465-bfae-18952f7e46aa" />
-
-Switched to Hydra (built-in to kali linux) because Crowbar wasn't able to do the job.
-
-<img width="635" height="221" alt="image" src="https://github.com/user-attachments/assets/c65d1929-9ef3-4cb2-8cbe-6f675a0ffd92" />
-<img width="614" height="42" alt="image" src="https://github.com/user-attachments/assets/7749c9d7-a6c9-47b3-8ee4-d81ebbcad528" />
-
-Using the compromised credentials and successfully RDP'ing (?) into the Windows server
-
-<img width="1010" height="843" alt="image" src="https://github.com/user-attachments/assets/5e07ec28-1ba2-4311-a593-1742eb37f6f3" />
-
-Phase 2 "Discovery"
-
-<img width="741" height="609" alt="image" src="https://github.com/user-attachments/assets/cb27b0bc-325c-49a9-81b5-88d47a7778e6" />
-
-Phase 3 "Defense Evasion"
-
-<img width="922" height="762" alt="image" src="https://github.com/user-attachments/assets/5a22106f-a373-4ed3-87d3-63a4d4bcd3fb" />
-
-Downloading the Apollo agent onto the Mythic C2 server.
-
-<img width="874" height="39" alt="image" src="https://github.com/user-attachments/assets/6a84db27-3274-4199-843b-1048022a2122" />
-
-Now we move into our Mythic C2 server.
-
-<img width="1436" height="284" alt="image" src="https://github.com/user-attachments/assets/76bee6ba-b493-457d-8f8b-3552381d1e31" />
-
-Now downloading a C2 Profile, Here were have selected the http agent profile
-
-<img width="866" height="49" alt="image" src="https://github.com/user-attachments/assets/648df30a-9841-4b18-9d9a-9ccb8889650a" />
-
-<img width="1836" height="105" alt="image" src="https://github.com/user-attachments/assets/40bd2bdf-8b5e-4173-8f1a-cf2ddf7e1390" />
-
-Now we want to "generate new payload"
-
-<img width="1592" height="123" alt="image" src="https://github.com/user-attachments/assets/0d65f41a-c49b-4a0b-837e-827f7c35a684" />
-
-Configuring the C2 Server (Must use the IP of the Mythic host)
-
-<img width="1544" height="581" alt="image" src="https://github.com/user-attachments/assets/0049e483-635d-48dd-b9ed-e3817da581c1" />
-
-We're doing things
-
-<img width="778" height="165" alt="image" src="https://github.com/user-attachments/assets/0731c987-48c9-450b-b653-e59d3aeaa375" />
-
-On the Mythic C2 server
-
-<img width="952" height="525" alt="image" src="https://github.com/user-attachments/assets/7722caa7-710f-4a30-9b2c-5a2e31b3ec77" />
-
-Moving and Renaming the executable file, it is now "svchost-Rengoku.exe" (Later on I ended up having to redownload the payload because Microsoft Security came back to life, and then Elastic EDR took over after that)
-
-<img width="813" height="178" alt="image" src="https://github.com/user-attachments/assets/499f5877-fbfd-4823-9581-2f6f73467e2b" />
-
-Hosting an http server
-
-<img width="557" height="56" alt="image" src="https://github.com/user-attachments/assets/0db56baa-eec6-4b75-ae24-cad497d6d233" />
-
-Completing Phase 4 "Execution": Using RDP from my Kali Linux to download the payload from the C2 Server onto the compromised Windows machine
-
-<img width="1002" height="79" alt="image" src="https://github.com/user-attachments/assets/870cc839-dd1e-425e-9b02-12eda2f03982" />
-
-Phase 5 "Command and Control": Shows that the connection has been established with PID 6044
-
-<img width="647" height="86" alt="image" src="https://github.com/user-attachments/assets/51450ea3-b8d4-404c-9247-c73eca9cd283" />
-
-The view of the connection from Mythic web interface
-
-<img width="1578" height="78" alt="image" src="https://github.com/user-attachments/assets/03e2446e-a228-4cd6-8b85-dadc799c256e" />
-
-Phase 6: "Exfiltration" of data on the compromised system
-
-<img width="1594" height="693" alt="image" src="https://github.com/user-attachments/assets/81375663-82d2-472e-9845-70a42572def0" />
-
-Interesting information: MITRE ID T1036 Masquerading
-
-<img width="1586" height="647" alt="image" src="https://github.com/user-attachments/assets/4b32b985-00d0-41ba-84d1-4914caf1e958" />
-
-That's exactly right
-
-<img width="919" height="395" alt="image" src="https://github.com/user-attachments/assets/984ec2dc-cd06-4f2c-aa93-d2d90bc71ada" />
-
-Even though the file name was downloaded as "svchost-Rengoku.exe" The Original file name is "Apollo.exe"
-
-<img width="593" height="493" alt="image" src="https://github.com/user-attachments/assets/1b6cbcb5-a32a-4947-b4fc-a4d9245e3455" />
-
-Now to create a Rule in Elastic to detect potential Mythic C2 Apollo agents
-
-<img width="1522" height="740" alt="image" src="https://github.com/user-attachments/assets/63a12afe-ce9b-4831-8068-569d40ab2d6f" />
-
-Building out the query to use for the Elastic dashboard
-
-<img width="1864" height="831" alt="image" src="https://github.com/user-attachments/assets/2d2b20e1-c64c-49df-98e6-8d6da7be78c7" />
-
-This is a key aspect: if it were true this means the server has a process that initiates the connection, however, this is false meaning that the connection was initiated from a different server than the host.
-
-<img width="718" height="406" alt="image" src="https://github.com/user-attachments/assets/7a7e06c7-d908-4ed2-995a-a3c64916d504" />
-
-New dashboard created to scan for potential C2 activity
-
-<img width="1874" height="795" alt="image" src="https://github.com/user-attachments/assets/33f3f422-306d-406b-8cc6-0f519da0dd54" />
-<img width="1883" height="225" alt="image" src="https://github.com/user-attachments/assets/962b0020-2a1f-4184-b7a5-2148f7030592" />
-
-Created a new Windows server for osTicket, we are now at 6 total servers on VULTR (Kali Linux was run from VirtualBox)
-
-<img width="1416" height="519" alt="image" src="https://github.com/user-attachments/assets/4bdb8321-cc3d-4d1c-bcba-3a36364032ea" />
-
-Downloading Xampp version 8.2.12 for the web host
-
-<img width="516" height="267" alt="image" src="https://github.com/user-attachments/assets/c3f2750f-92c5-458f-b2b5-c01ec8bd68f1" />
-
-Configuring the Xampp properties file
-
-<img width="808" height="690" alt="image" src="https://github.com/user-attachments/assets/551a4e06-9ca1-47a7-b52d-d5069fdd8a84" />
-
-Now configuring the config.inc.php file. Will first make a copy and then edit the original.
-
-<img width="987" height="705" alt="image" src="https://github.com/user-attachments/assets/4f15b1fa-0359-4b3d-8332-6a19a83ff028" />
-
-Moving into Windows Defender to configure the Firewall
-
-<img width="1219" height="327" alt="image" src="https://github.com/user-attachments/assets/5ec8b9a8-cee6-400a-a834-c124190a04f6" />
-
-The Firewall Rule description
-
-<img width="882" height="549" alt="image" src="https://github.com/user-attachments/assets/406f7aea-ad78-4a8e-a811-a624bce1deeb" />
-
-Configuring the 'Root' account for phpMyAdmin to bind to the IP of my osTicket server
-
-<img width="853" height="780" alt="image" src="https://github.com/user-attachments/assets/e9a935a6-f71c-4bad-980f-7cfb111cb639" />
-
-Configuring the 'Pma' account to bind to the IP as well
-
-<img width="1311" height="806" alt="image" src="https://github.com/user-attachments/assets/4ee0c0ad-6b3d-42b9-9eb7-6d9abeda8bb0" />
-
-Downloading osTicket v1.18.2
-
-<img width="1405" height="769" alt="image" src="https://github.com/user-attachments/assets/c22f447c-fc48-4a95-99fd-532d575d17d4" />
-
-Creating a 'New Folder' for osTicket in this directory because the default web contents are stored here
-
-<img width="915" height="680" alt="image" src="https://github.com/user-attachments/assets/7abd369a-009c-4596-b3ac-302af1848239" />
-
-And now we have access to the web host for osticket installer
-
-<img width="1418" height="506" alt="image" src="https://github.com/user-attachments/assets/3aa413a2-a589-4c71-a5b4-1a547bcba1d6" />
-
-Creating a new database 'Rengoku-DB' from phpMyAdmin
-
-<img width="1351" height="694" alt="image" src="https://github.com/user-attachments/assets/b4ac47df-46a2-46d8-94cf-db91c1c68e4c" />
-
-Then, configuring the settings of the 'Rengoku-DB' database from the osticket server
-
-<img width="1061" height="822" alt="image" src="https://github.com/user-attachments/assets/cf64cebb-3eff-46a8-a91e-fff5349f8926" />
-
-We now have osticket properly installed!
-
-<img width="1354" height="898" alt="image" src="https://github.com/user-attachments/assets/5ce6a945-bc89-4ebe-b3e0-b19bd934c00c" />
-
-The first step of the file configurations, using PowerShell
-
-<img width="1041" height="330" alt="image" src="https://github.com/user-attachments/assets/6758fc70-0ed5-4183-8eac-630b1e1ca40a" />
-
-Accessing the Staff Control Panel of osTicket from my host
-
-<img width="1275" height="588" alt="image" src="https://github.com/user-attachments/assets/a8c3203d-6c0c-4cde-b357-d92dfa304ab9" />
-
-Generating an API key to integrate osTicket with Elastic
-
-<img width="1221" height="288" alt="image" src="https://github.com/user-attachments/assets/b8e6af0b-7a05-4dfe-be74-fdfb1b58d19a" />
-
-Starting a Free Trial is necessary to integrate web API's
-
-<img width="1418" height="753" alt="image" src="https://github.com/user-attachments/assets/f91d3f40-60d9-4b50-b373-5700aa5179c2" />
-
-Using a 'Webhook' connector
-
-<img width="891" height="769" alt="image" src="https://github.com/user-attachments/assets/108b96c2-e99d-48bf-91bd-042ea5d4086b" />
-
-Stealing this Example
-
-<img width="1205" height="898" alt="image" src="https://github.com/user-attachments/assets/f0354a72-178f-46ed-b3dd-977ee565445f" />
-
-Great Success!
-
-<img width="867" height="758" alt="image" src="https://github.com/user-attachments/assets/1348d76f-2908-4d59-a4df-564f9da4ee45" />
-
-The POC from osTicket
-
-<img width="1205" height="456" alt="image" src="https://github.com/user-attachments/assets/a846df8d-0570-4481-a6e8-7f1690c9abc6" />
-
-Investigating an alert on Brute Force activity
-
-<img width="1863" height="888" alt="image" src="https://github.com/user-attachments/assets/c1077387-b3ad-4549-ac7a-58da05f4b913" />
-
-Checking the IP on AbuseIPDB: Originates from Thailand
-
-<img width="1793" height="659" alt="image" src="https://github.com/user-attachments/assets/3c65f5cf-9018-4409-af96-e57d921e1cb4" />
-
-From GreyNoise:
-
-<img width="452" height="151" alt="image" src="https://github.com/user-attachments/assets/756ccdfc-000b-4644-b673-c890e87ed4b0" />
- This shows that the IP scans the internet for vulnerable servers, not indicative of a targeted attack (yet)
-
- Further investigation into the IP, to check for successful attempts
- 
-<img width="971" height="657" alt="image" src="https://github.com/user-attachments/assets/48a4e247-e4d5-4207-b4d2-39a1a9fbea84" />
-
-<img width="834" height="411" alt="image" src="https://github.com/user-attachments/assets/972e564f-7e9a-44a6-869d-ae644c6cca10" />
- Can close out the ticket as benign
-
- Configuring Elastic to send a ticket to our osTicket server when the 'Brute Force' alert is triggered
-
- <img width="1421" height="836" alt="image" src="https://github.com/user-attachments/assets/1f76a750-df4d-4775-b7ff-f6b31d858731" />
-
-Adding a link to click from the ticket to go into elastic to being investigating the alert
-
-<img width="983" height="412" alt="image" src="https://github.com/user-attachments/assets/9e9d433a-b2ce-42f8-896d-2c00bb873088" />
-
-configuring the kibana.yml file for my ELK server so the hyperlink will work
-
-<img width="864" height="643" alt="image" src="https://github.com/user-attachments/assets/8ab30342-8ce1-460b-8812-81ef56cf4841" />
-
-Configuring RDP Alert to send tickets to osTicket
-
-<img width="1607" height="670" alt="image" src="https://github.com/user-attachments/assets/11563fa4-d5cc-4ab6-be64-ce42a46903aa" />
-
-Beginning RDP Brute Force investigation within the Alert Dashboard
-
-<img width="721" height="711" alt="image" src="https://github.com/user-attachments/assets/a0ae4fd3-2597-4545-98bd-1b3eb15d582e" />
-
-Checking the IP on AbuseIPDB
-
-<img width="848" height="199" alt="image" src="https://github.com/user-attachments/assets/c5ab900a-d662-41fe-821b-ca8338e84947" />
-
-Then on GreyNoise
-
-<img width="1118" height="417" alt="image" src="https://github.com/user-attachments/assets/225df863-5fe5-4bfc-9059-8f4ba6c6b1da" />
- UH OH
-
-<img width="1328" height="542" alt="image" src="https://github.com/user-attachments/assets/b85a7e07-83df-4c65-b18d-544fa5edfd28" />
-
-The IP was able to RDP into the Administrator Account Successfully
-
-<img width="1566" height="530" alt="image" src="https://github.com/user-attachments/assets/ee9ed11c-cbea-4933-bea6-1cdc23e4fa33" />
-
-Capturing the 'TargetLogonID' and searching for further activity on the host system with that ID
-
-<img width="1835" height="842" alt="image" src="https://github.com/user-attachments/assets/d16f0343-6871-4121-b5b7-9670b37adf01" />
-
-There are 3 Events that occurred, the timing and sequence of events signals a scan of the host. Time to pivot
-
-<img width="1696" height="692" alt="image" src="https://github.com/user-attachments/assets/7a08f378-b9e4-405e-944f-b2d689eb0103" />
-
-Using the Dashboard, we see that there is potential suspicious activity
-
-<img width="1868" height="424" alt="image" src="https://github.com/user-attachments/assets/bf7314fe-7aa1-4976-a016-6fe9479aea12" />
-
-Searching for Network Connections with that Destination IP address
-
-
-<img width="1624" height="391" alt="image" src="https://github.com/user-attachments/assets/54b1ddca-4a8c-48bd-b191-7dc7fbe5b2f8" />
-
-Using ProcessGUID to search for events that occurred in that specific PowerShell session
-
-<img width="672" height="473" alt="image" src="https://github.com/user-attachments/assets/f6c1c124-641b-4212-8739-64a3b24cba0e" />
-
-We see a "File Created" with Event.code:11 
-
-<img width="1824" height="919" alt="image" src="https://github.com/user-attachments/assets/6ca7c22e-0a76-427b-9dd3-bd3c43a2f736" />
-
-The file name:
-
-<img width="634" height="595" alt="image" src="https://github.com/user-attachments/assets/45bb6723-ea86-479f-a21b-e0180ddcbb9d" />
-
-Event.Code:29 Is the Sysmon ID for creation of new executable files
-
-<img width="634" height="387" alt="image" src="https://github.com/user-attachments/assets/5ae12e8f-35df-4394-aebc-7996a6b11e11" />
-
-We find the 'Process:Create' which is Event.ID: 1. This shows a different ProcessGUID which is unique to the executable (Rengoku)
-
-<img width="1317" height="467" alt="image" src="https://github.com/user-attachments/assets/ceedbc49-9e0d-49f7-a1d5-ed867bccc138" />
-
-The notes of the investigation
-
-<img width="889" height="467" alt="image" src="https://github.com/user-attachments/assets/48b139e6-22c5-47b2-a0f1-ab0a20792acd" />
-
-Configuring the Mythic C2 Alert from Elastic to send tickets to osTicket
-
-<img width="766" height="236" alt="image" src="https://github.com/user-attachments/assets/17bb9e63-f50e-454b-8779-2fe73b3bae81" />
-
-Integrating Elastic Defend EDR into Elastic
-
-<img width="1884" height="334" alt="image" src="https://github.com/user-attachments/assets/ef75f80d-2471-4b83-838f-4387935f2f5a" />
-
-The configurations for Elastic Defend
-
-<img width="1216" height="735" alt="image" src="https://github.com/user-attachments/assets/43f1756b-20d8-45e5-9fbc-0703d651f3df" />
-
-<img width="1604" height="516" alt="image" src="https://github.com/user-attachments/assets/7ff69312-a1de-41f5-b54d-9b29bddf73c0" />
-
-Lovely email that my actions were being noticed out in the wild
-
-<img width="1371" height="973" alt="image" src="https://github.com/user-attachments/assets/da418ad3-2ebb-47e0-b847-e3f60d207b08" />
-
-Microsoft Defender was able to delete the file, redownloaded it.
-
-<img width="1873" height="200" alt="image" src="https://github.com/user-attachments/assets/bf04606d-4ec8-4256-acbf-10ae553c58e9" />
-
-Elastic EDR actively blocking the malware download even with Microsoft security settings turned off
-
-<img width="714" height="700" alt="image" src="https://github.com/user-attachments/assets/713cc05a-b7b2-44fa-b2f0-00a254ef9c67" />
-
-Maybe we can brute force the malware onto the system?
-
-<img width="1375" height="485" alt="image" src="https://github.com/user-attachments/assets/d32b0eac-59ae-4933-955f-0c12c354ef8a" />
-
-The file was allowed to be downloaded, but the connection to Mythic was cut after 1 second...
-
-<img width="744" height="791" alt="image" src="https://github.com/user-attachments/assets/22ba4686-c257-441f-bf85-d05eaf76e6e1" />
-
-Very suspicious activity
-
-<img width="900" height="468" alt="image" src="https://github.com/user-attachments/assets/2558b88d-6dfc-4c68-a71b-ef9f95edf812" />
-<img width="890" height="518" alt="image" src="https://github.com/user-attachments/assets/c8ee32eb-7d45-4fc5-9ed8-b61728ffea7b" />
-
-From here the steps to take: 
-1. Isolate the host. Prevent any further spread of malicious activity
-2. Perform OSINT. We can upload the file to VirusTotal to investigate it further  
- <img width="1024" height="420" alt="image" src="https://github.com/user-attachments/assets/856fb329-7904-48ce-adad-8f57a83e6190" />
-3. Check for autoruns/scheduled tasks 
- <img width="1060" height="757" alt="image" src="https://github.com/user-attachments/assets/c95ef06d-7903-442c-90fe-21265010a1ab" />
-4. Check if it is still running
-<img width="918" height="222" alt="image" src="https://github.com/user-attachments/assets/8a82f4f8-664c-40b8-af55-6c04acfc6a99" />
-5. Perform full antivirus scan
- <img width="1065" height="862" alt="image" src="https://github.com/user-attachments/assets/2ea30441-dfa7-4262-969d-5b8912fd5ad3" />
-6. Remove the threat
-
-7. Save the Filehash for threat intelligence
-
-8. Lessons learned
-   - Don't turn off security settings
-   - Don't click links to things that are suspicious
-   - Elastic EDR is more powerful than my Mythic C2 server
-
-Configuring Elastic EDR to automatically Isolate the Windows server when detecting malware
-
-<img width="1836" height="874" alt="image" src="https://github.com/user-attachments/assets/dbc35dba-f992-4410-9ff5-97a59073c7e0" />
-
+<summary>Triage & Investigation Workflow</summary>
+
+1. **Investigating Alerts in osTicket**  
+   ![Investigate Alert](assets/screenshots/ElasticosTicketPOC.png)
+   ![Investigate Alert](assets/screenshots/InvestigationRDP.png) 
+   ![AbuseIPDB Check](assets/screenshots/InvestigationRDP1.png)  
+   ![GreyNoise Check](assets/screenshots/InvestigationRDP2.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP3.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP4.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP5.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP6.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP7.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP8.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP9.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP10.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP11.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP12.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP13.png)
+   ![Elastic Query](assets/screenshots/InvestigationRDP14.png)
    
+   
+2. **Elastic Alert Correlation & Ticketing**  
+   ![Elastic Alert Ticket](assets/screenshots/Alerts.png)  
+   ![Ticket Link to Elastic](assets/screenshots/ElasticosTicketFormat.png)
+   ![Ticket Link to Elastic](assets/screenshots/ElasticosTicketFormat1.png)
+
+3. **Response Actions & Lessons Learned**  
+   - Isolate hosts  
+   - VirusTotal checks
+     ![Virustotal](assets/screenshots/IRVirusTotal.png)  
+   - Autoruns / Scheduled Tasks
+     ![Taskcheck](assets/screenshots/IRschTaskcheck.png)
+     ![Findstr](assets/screenshots/IRMalwarefindstr.png) 
+   - Full AV scans
+     ![AVrun](assets/screenshots/IRAntivirusRun.png)
+   - Save filehashes for threat intelligence  
+   - Key lessons: Keep security on, avoid suspicious links
+
+4. **Elastic EDR Automated Actions**
+   ![Elastic Defend](assets/screenshots/ElasticDefend.png)
+   ![Elastic Defend](assets/screenshots/ElasticDefendEnrolled.png)
+   ![EDR Isolation](assets/screenshots/IRElasticDefendSOAR.png)
+   ![EDR Isolation](assets/screenshots/ElasticDefendAlert.png)
+   ![EDR Isolation](assets/screenshots/ElasticDefendAlert1.png)
+</details>
+
