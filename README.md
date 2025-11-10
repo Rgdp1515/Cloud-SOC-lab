@@ -1,6 +1,20 @@
 # Cloud-SOC-Lab
 
-Creating a SOC environment in VULTR to generate telemetry, investigate incidents, and analyze network traffic/malware.
+This project demonstrates the design, deployment, and operation of a full-scale Security Operations Center (SOC) in a cloud environment. Using VULTR-hosted servers, I built a multi-tier infrastructure that simulates both Blue Team (defensive) and Red Team (adversarial) scenarios. 
+
+Key highlights:
+
+SOC & Telemetry: ELK stack (Elasticsearch, Kibana, Fleet) deployed to collect and analyze Windows and Linux logs, including Sysmon and Defender telemetry.
+
+Blue Team Capabilities: Real-time alerting, dashboards, MITRE ATT&CK mapping, correlation rules, and integration with osTicket for automated ticketing and incident triage.
+
+Red Team Simulations: Mythic C2 server and Kali Linux used to simulate attacks including brute force, reconnaissance, malware execution, and exfiltration.
+
+Security Automation: Elastic EDR configured to isolate hosts, block malicious activity, and integrate threat intelligence for actionable response.
+
+Outcome: Full end-to-end demonstration of incident detection, investigation, response, and post-incident analysis in a cloud SOC environment.
+
+This project showcases hands-on expertise in cloud security, threat monitoring, SOC operations, and incident response, providing recruiters and hiring managers a clear view of practical, enterprise-ready cybersecurity skills.
 
 ---
 
@@ -220,3 +234,4 @@ Creating a SOC environment in VULTR to generate telemetry, investigate incidents
    ![EDR Isolation](assets/screenshots/ElasticDefendAlert1.png)
 </details>
 
+Thank you to MyDFIR for the opportunity to have such an amazing platform available to all those seeking hands-on experience as Cybersecurity professionals.
