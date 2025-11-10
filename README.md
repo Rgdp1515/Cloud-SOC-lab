@@ -1,3 +1,327 @@
+# 🧠 Cloud SOC Lab  
+Building a cloud-based Security Operations Center (SOC) environment in **Vultr** to simulate attacks and investigate telemetry using **Elastic Stack**, **osTicket**, and **Elastic Defend**.
+
+---
+
+## 🏗️ Architecture Overview  
+
+This lab simulates a modern cloud SOC ecosystem. It integrates Elastic for log collection and detection, osTicket for case management, and Kali Linux/Mythic C2 for red-team adversary simulation.  
+
+**Environment Components:**  
+- 🧩 **Elastic Stack (ELK)** – SIEM and visualization layer  
+- 🖥️ **Windows Server** – Target host for RDP attacks and Sysmon telemetry  
+- 🐧 **Ubuntu Fleet Server** – Elastic Agent manager and log shipper  
+- 💀 **Kali Linux** – Red Team simulation platform (Crowbar, Hydra)  
+- 🕵️ **Mythic C2** – Command & Control framework for adversary emulation  
+- 🎟️ **osTicket** – Case management and alert triage  
+- 🛡️ **Elastic Defend** – Endpoint protection and automated host isolation  
+
+*(Insert your architecture diagram below)*
+
+<img width="100%" alt="Cloud SOC Architecture" src="YOUR-DIAGRAM-LINK-HERE" />
+
+---
+
+## ⚙️ Phase 1: Initial Setup  
+
+### Deploying Elastic Stack on Ubuntu  
+
+Installed and configured **Elasticsearch** and **Kibana** on an Ubuntu VM hosted in Vultr.
+
+<img width="1392" height="724" alt="Ubuntu Server on VULTR" src="https://github.com/user-attachments/assets/f20f1347-c7ef-4bb3-a761-b0f79135f27a" />
+
+### Installing and Starting Elasticsearch  
+
+<img width="1060" height="222" alt="Downloading Elasticsearch onto the Ubuntu server" src="https://github.com/user-attachments/assets/d78195c0-25fb-46dd-ac57-4ba9373b78b8" />
+
+<img width="1084" height="433" alt="Starting Elasticsearch on the Ubuntu server" src="https://github.com/user-attachments/assets/a0b4b72d-39ef-4462-8e3f-d9b32cae9640" />
+
+### Setting Up Kibana  
+
+Downloaded and initialized **Kibana**, the visualization and management layer of Elastic.
+
+<img width="1089" height="590" alt="Downloading and initializing Kibana on the Ubuntu server" src="https://github.com/user-attachments/assets/41735b82-22d8-4503-9179-e6491091a192" />
+
+Successfully authenticated and enrolled into Kibana.
+
+<img width="1868" height="630" alt="Successfully enrolling and authenticated into Kibana" src="https://github.com/user-attachments/assets/2b0f1d4e-e94b-41f3-a115-e601fad77e85" />
+
+Generated and stored security keys for Kibana.
+
+<img width="949" height="130" alt="Generating and storing security keys into the Kibana Key storage" src="https://github.com/user-attachments/assets/3aa90d88-82a9-4f96-93d3-2f6e7f0487b6" />
+
+---
+
+### Configuring Fleet Server and Elastic Agent  
+
+Set up **Elastic Fleet Server** to centrally manage and enroll agents across all hosts.
+
+<details>
+  <summary>🖼️ View Setup Screenshots</summary>
+
+  <br>
+
+  <img width="1021" height="452" alt="Fleet Server Installation Command" src="https://github.com/user-attachments/assets/7f5a2ef7-02a4-457d-86a2-18a0dcb1a61b" />
+
+  <br>
+
+  <img width="1784" height="625" alt="Fleet Server Running and Listening on Port 8220" src="https://github.com/user-attachments/assets/0d703132-20e9-4af5-8cf2-1c4c963aebc3" />
+
+  <br>
+
+  <img width="1784" height="647" alt="Elastic Agent Enrolled and Connected to Fleet" src="https://github.com/user-attachments/assets/a32a1f46-1865-4b23-b37b-27e91bda7a7d" />
+
+  <br>
+
+</details>
+
+---
+
+### Enrolling Windows Server to Elastic  
+
+Enrolled a **Windows Server 2022** host with **Elastic Agent** to capture RDP, Sysmon, and Defender telemetry.
+
+<details>
+  <summary>🖼️ View Enrollment Screenshots</summary>
+
+  <img width="1512" height="697" alt="Windows Server Elastic Agent Install" src="https://github.com/user-attachments/assets/7c89a2e9-ff45-4f51-961c-67a6c3e91de1" />
+
+  <img width="1512" height="707" alt="Windows Server Enrolled in Elastic" src="https://github.com/user-attachments/assets/69f5c19b-62b7-4221-bd58-d33e6947870d" />
+</details>
+
+---
+
+### Enabling Sysmon Logging  
+
+Configured **Sysmon** on Windows to collect detailed process creation, network connection, and registry telemetry for Elastic analysis.
+
+<details>
+  <summary>🖼️ View Sysmon Configuration Screenshots</summary>
+
+  <img width="1536" height="710" alt="Installing Sysmon on Windows Server" src="https://github.com/user-attachments/assets/d3e3d5b7-6a6a-4b8b-a041-0b5b67a23b89" />
+
+  <img width="1536" height="700" alt="Sysmon Running and Logging Events" src="https://github.com/user-attachments/assets/e0c2143b-9617-4f4d-9f2a-4b1f24c6ed4a" />
+</details>
+
+---
+
+### Log Ingestion and Validation  
+
+Validated that Elastic successfully received logs from both **Windows** and **Ubuntu** hosts. Verified fields, event IDs, and dashboards for host activity.
+
+<details>
+  <summary>🖼️ View Log Ingestion Screenshots</summary>
+
+  <img width="1784" height="658" alt="Elastic Host Overview Dashboard" src="https://github.com/user-attachments/assets/48f5c908-0d17-498f-933d-f2927b7a65ed" />
+
+  <img width="1784" height="625" alt="Windows Event Logs Visible in Kibana" src="https://github.com/user-attachments/assets/6b13a998-8fcb-4b8c-8d9b-1c676671df52" />
+</details>
+
+---
+
+### Outcome  
+
+At this stage, the SOC environment was operational:  
+✅ Elastic Stack deployed and reachable  
+✅ Fleet Server managing enrolled agents  
+✅ Sysmon feeding event-level telemetry  
+✅ Data visible and searchable in Kibana dashboards  
+
+This foundation enabled the next phase: **alerting, detection engineering, and osTicket integration**.
+
+---
+
+## 🛡️ Phase 2: Blue Team Operations  
+
+After building the foundation of the SOC, I focused on integrating **osTicket** with **Elastic Stack** to simulate a real-world Security Operations workflow — where detections trigger automated ticket creation and analysts triage incidents.
+
+---
+
+### Setting Up osTicket for Incident Management  
+
+Deployed **osTicket** to manage and track security alerts from Elastic.  
+Configured departments, help topics, and ticket queues specifically for SOC use cases (e.g., Intrusion Detection, Malware, Authentication Anomalies).
+
+<details>
+  <summary>🖼️ View osTicket Configuration Screenshots</summary>
+
+  <img width="1784" height="663" alt="osTicket Interface Setup" src="https://github.com/user-attachments/assets/54ef54f9-0d5d-4861-a7e2-bb7a11ac4463" />
+
+  <img width="1784" height="635" alt="osTicket Departments and Teams Configuration" src="https://github.com/user-attachments/assets/2b573d7c-83fc-4b79-b64f-12f1d6a18c38" />
+
+  <img width="1784" height="660" alt="osTicket Categories for SOC Workflow" src="https://github.com/user-attachments/assets/32b0d84b-733b-472b-ae1a-4e4e7fdf06a7" />
+</details>
+
+---
+
+### Integrating Elastic Alerts with osTicket  
+
+Configured **Elastic’s Rule Engine** to send webhook alerts directly into osTicket’s API.  
+This allowed Elastic detections (like brute-force attempts or suspicious logons) to automatically open a new investigation ticket for analysts.
+
+<details>
+  <summary>🖼️ View Integration Setup Screenshots</summary>
+
+  <img width="1784" height="662" alt="Elastic Webhook Action Setup" src="https://github.com/user-attachments/assets/1c54ed6b-7a1c-43d4-8a04-d6c3f404f88a" />
+
+  <img width="1784" height="660" alt="osTicket Receiving Alerts from Elastic" src="https://github.com/user-attachments/assets/9c20513d-0309-46e5-8254-2373b69c63e8" />
+</details>
+
+---
+
+### Validating Automated Ticket Creation  
+
+Each triggered alert in Elastic generated a corresponding **ticket in osTicket** — containing metadata such as:
+- Source IP  
+- Target host  
+- Detection rule name  
+- Timestamp  
+- Severity  
+
+This replicated the escalation process SOC analysts follow when responding to security alerts.
+
+<details>
+  <summary>🖼️ View Ticket Automation in Action</summary>
+
+  <img width="1784" height="660" alt="osTicket Ticket Automatically Created from Elastic Alert" src="https://github.com/user-attachments/assets/1252b70d-b2c1-4de0-9272-217a61d9cba4" />
+
+  <img width="1784" height="625" alt="Analyst View of osTicket with Alert Metadata" src="https://github.com/user-attachments/assets/3c1e8a89-3f9e-4b31-bf0d-5b88b9da9e9f" />
+</details>
+
+---
+
+### Simulating Incident Triage  
+
+Using osTicket, I simulated a **Level 1–2 SOC analyst workflow**:
+1. Review incoming tickets from Elastic alerts  
+2. Perform quick IOC enrichment (e.g., IP lookup, VirusTotal)  
+3. Assign priority and escalate if necessary  
+4. Close or document the investigation outcome  
+
+This process created a realistic incident lifecycle, linking Elastic detections with an operational response pipeline.
+
+<details>
+  <summary>🖼️ View Triage Workflow Screenshots</summary>
+
+  <img width="1784" height="655" alt="Elastic Alert Triggering SOC Investigation Ticket" src="https://github.com/user-attachments/assets/0b80ef03-f02e-4f03-b2cc-0c5db3f91891" />
+
+  <img width="1784" height="657" alt="Ticket Assignment and Escalation" src="https://github.com/user-attachments/assets/8f012c27-c6b4-4eac-88ed-4ec11cb7cc08" />
+</details>
+
+---
+
+### Outcome  
+
+By integrating Elastic Stack with osTicket, I replicated a real SOC analyst’s workflow:
+✅ Elastic detections automatically triggered incident tickets  
+✅ Tickets contained complete alert context  
+✅ Analysts could triage, document, and close incidents end-to-end  
+
+This automation bridged detection and response, demonstrating how modern SOCs streamline workflows for faster, consistent investigations.
+
+---
+
+## 💀 Phase 3: Red Team Simulation  
+
+With the SOC fully operational, I switched to an **adversarial mindset** — simulating common attack techniques using **Kali Linux** and **Mythic C2** to validate my detection engineering and blue team visibility.
+
+---
+
+### Brute Force Attack Simulation (Kali Linux)  
+
+Used **Hydra** and **Crowbar** on Kali Linux to perform **RDP brute-force attacks** against the Windows Server to simulate external threat actor activity.
+
+<details>
+  <summary>🖼️ View Brute Force Simulation Screenshots</summary>
+
+  <img width="1784" height="635" alt="Hydra Brute Force Command" src="https://github.com/user-attachments/assets/185ed07c-5c61-4401-80f6-0f3bb2f5e4b3" />
+
+  <img width="1784" height="665" alt="Crowbar RDP Brute Force Attempt" src="https://github.com/user-attachments/assets/4e879c4c-2e7d-4d9f-8f5c-5a7f09e3df49" />
+</details>
+
+---
+
+### Elastic Detection Correlation  
+
+Elastic automatically detected the brute-force activity, correlating it with authentication failures and network anomalies from Windows event logs and Sysmon telemetry.  
+
+**Detection Highlights:**  
+- Multiple failed RDP logons (Event ID 4625)  
+- Source IP correlation with known Kali host  
+- Spike in authentication attempts per minute  
+
+<details>
+  <summary>🖼️ View Elastic Detection Correlation Screenshots</summary>
+
+  <img width="1784" height="645" alt="Elastic Detection Alert for Brute Force" src="https://github.com/user-attachments/assets/bba7a3d1-2b47-4f10-a6f5-c2d08a4b7c1d" />
+
+  <img width="1784" height="657" alt="Elastic Brute Force Timeline and Event Correlation" src="https://github.com/user-attachments/assets/7a94c28b-7db9-4c4e-93a8-3f6c14a2c676" />
+</details>
+
+---
+
+### Deploying Mythic C2  
+
+Installed and configured **Mythic Command & Control (C2)** on Ubuntu.  
+Deployed the **Apollo agent** on the Windows Server using a payload delivered via RDP.
+
+<details>
+  <summary>🖼️ View Mythic C2 Deployment Screenshots</summary>
+
+  <img width="1784" height="640" alt="Mythic C2 Server Dashboard" src="https://github.com/user-attachments/assets/19e917d0-5f87-45c3-a9f4-3d8830b9dfb5" />
+
+  <img width="1784" height="650" alt="Apollo Agent Callback in Mythic" src="https://github.com/user-attachments/assets/fbdf15b0-7d02-4a7e-8c5d-94f0de39b01f" />
+</details>
+
+---
+
+### Elastic’s Response and MITRE ATT&CK Mapping  
+
+Elastic’s built-in detections quickly identified the **C2 beaconing** and **process masquerading** associated with the Mythic payload.  
+Mapped detections aligned to the **MITRE ATT&CK framework**, confirming the SOC’s ability to detect early-stage command-and-control activity.
+
+**Detected Techniques:**  
+| Technique ID | Name | Description |
+|---------------|------|-------------|
+| T1110 | Brute Force | Multiple failed RDP authentication attempts |
+| T1059 | Command and Scripting Interpreter | Use of PowerShell commands by C2 agent |
+| T1036 | Masquerading | Payload execution disguised as legitimate process |
+| T1071 | Application Layer Protocol | C2 communication via HTTP/S channels |
+
+<details>
+  <summary>🖼️ View Detection Mapping and Elastic Response</summary>
+
+  <img width="1784" height="655" alt="Elastic Detection MITRE Mapping" src="https://github.com/user-attachments/assets/7d45a38d-69ac-4b6a-bcfb-77e7d1b85b3d" />
+
+  <img width="1784" height="660" alt="Elastic Correlation of Mythic C2 Activity" src="https://github.com/user-attachments/assets/0d734eeb-b932-4b06-9e6d-3df3c08392cb" />
+</details>
+
+---
+
+### Outcome  
+
+✅ Successfully emulated real-world adversary behavior within a controlled lab  
+✅ Verified SOC’s ability to detect brute-force, payload execution, and C2 beaconing  
+✅ Mapped detection events to MITRE ATT&CK techniques for structured threat analysis  
+✅ Demonstrated end-to-end Red vs. Blue visibility through Elastic  
+
+This phase validated the SOC’s defensive readiness and the visibility of Elastic detections across every stage of the attack lifecycle.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Cloud-SOC-lab
 Creating a SOC environment in VULTR to generate telemetry, investigate incidents, and analyze network traffic/malware
 
